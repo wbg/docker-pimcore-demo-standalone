@@ -27,9 +27,10 @@ ADD vhost.conf /etc/apache2/sites-enabled/default
 
 RUN rm -r /etc/php5/cli/php.ini && ln -s /etc/php5/fpm/php.ini /etc/php5/cli/php.ini
 RUN mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.dist
+ADD www-data.conf /etc/php5/fpm/pool.d/www-data.conf
 
 # Enable apache rewrite module
-RUN a2enmod rewrite
+RUN a2enmod rewrite actions fastcgi alias
 
 RUN wget https://www.pimcore.org/download/pimcore-latest.zip -O /var/www/pimcore.zip 
 RUN cd /var/www && unzip pimcore.zip && rm pimcore.zip 
