@@ -3,7 +3,7 @@ MAINTAINER pimcore GmbH <info@pimcore.com>
 
 RUN apt-get update && \
  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
- DEBIAN_FRONTEND=noninteractive apt-get -y install wget sudo 
+ DEBIAN_FRONTEND=noninteractive apt-get -y install wget sudo supervisor pwgen
 
 ADD sources.list /tmp/sources.list
 RUN cat /tmp/sources.list >> /etc/apt/sources.list 
@@ -40,5 +40,11 @@ RUN /tmp/install-ffmpeg.sh
 RUN wget https://www.pimcore.org/download/pimcore-latest.zip -O /var/www/pimcore.zip 
 RUN cd /var/www && unzip pimcore.zip && rm pimcore.zip 
 
+ADD start-apache.sh /start-apache.sh
+ADD start-php-fpm.sh /start-php-fpm.sh
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh
+ADD supervisord-apache-fpm.conf /etc/supervisor/conf.d/supervisord-apache-fpm.conf
+
 EXPOSE 80
-#CMD ["/run.sh"]
+CMD ["/run.sh"]
