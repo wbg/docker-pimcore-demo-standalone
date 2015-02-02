@@ -10,7 +10,7 @@ RUN cat sources.list >> /etc/apt/sources.list
 
 RUN wget -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add - 
 
-# Install packages
+RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
  php5-fpm php5-cli php5-curl php5-dev php5-gd php5-imagick php5-imap \
  php5-intl php5-mcrypt php5-memcache php5-mysql php5-sqlite php5-redis \
