@@ -16,7 +16,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
  php5-intl php5-mcrypt php5-memcache php5-mysql php5-sqlite php5-redis \
  bzip2 unzip libxrender1 libfontconfig1 imagemagick \
  build-essential libssl-dev lynx autoconf libmagickwand-dev \
- pngnq pngcrush xvfb cabextract libfcgi0ldbl poppler-utils
+ pngnq pngcrush xvfb cabextract libfcgi0ldbl poppler-utils xfonts-75dpi
 
 RUN apt-get -y -t wheezy-backports install libreoffice python-uno libreoffice-math
 
