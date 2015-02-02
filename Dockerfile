@@ -28,6 +28,8 @@ ADD vhost.conf /etc/apache2/sites-enabled/default
 # Enable apache rewrite module
 RUN a2enmod rewrite
 
+RUN wget https://www.pimcore.org/download/pimcore-latest.zip -O /var/www/pimcore.zip 
+RUN cd /var/www && unzip pimcore.zip && rm pimcore.zip 
 
 EXPOSE 80
 #CMD ["/run.sh"]
