@@ -1,19 +1,21 @@
 FROM google/debian:wheezy
 MAINTAINER pimcore GmbH <info@pimcore.com>
 
+RUN apt-get update && \
+ DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
+ DEBIAN_FRONTEND=noninteractive apt-get -y install wget sudo 
+
 ADD sources.list /sources.list
 RUN cat sources.list >> /etc/apt/sources.list 
 
-RUN wget -O - http://www.dotdeb.org/dotdeb.gpg | sudo apt-key add - 
+RUN wget -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add - 
 
 # Install packages
-RUN apt-get update && \
- DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
- DEBIAN_FRONTEND=noninteractive apt-get -y install \
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
  php5-fpm php5-cli php5-curl php5-dev php5-gd php5-imagick php5-imap \
  php5-intl php5-mcrypt php5-memcache php5-mysql php5-sqlite php5-redis \
  bzip2 unzip libxrender1 libfontconfig1 imagemagick \
- build-essential libssl-dev sudo lynx autoconf libmagickwand-dev \
+ build-essential libssl-dev lynx autoconf libmagickwand-dev \
  pngnq pngcrush xvfb cabextract libfcgi0ldbl poppler-utils
 
 RUN apt-get -y -t wheezy-backports install libreoffice python-uno libreoffice-math
