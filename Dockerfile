@@ -22,15 +22,14 @@ RUN apt-get -y -t wheezy-backports install libreoffice python-uno libreoffice-ma
 
 RUN apt-get -y install apache2-mpm-worker libapache2-mod-fastcgi
  
-# Override default apache conf
+RUN a2enmod rewrite actions fastcgi alias
 ADD vhost.conf /etc/apache2/sites-enabled/default
 
 RUN rm -r /etc/php5/cli/php.ini && ln -s /etc/php5/fpm/php.ini /etc/php5/cli/php.ini
 RUN mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.dist
 ADD www-data.conf /etc/php5/fpm/pool.d/www-data.conf
 
-# Enable apache rewrite module
-RUN a2enmod rewrite actions fastcgi alias
+RUN wget http://clients.elements.at/server/wkhtmltopdf-0.12.deb && dpkg -i wkhtmltopdf-0.12.deb
 
 RUN wget https://www.pimcore.org/download/pimcore-latest.zip -O /var/www/pimcore.zip 
 RUN cd /var/www && unzip pimcore.zip && rm pimcore.zip 
