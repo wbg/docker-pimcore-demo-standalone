@@ -4,10 +4,12 @@ MAINTAINER pimcore GmbH <info@pimcore.com>
 ADD sources.list /sources.list
 RUN cat sources.list >> /etc/apt/sources.list 
 
+RUN wget -O - http://www.dotdeb.org/dotdeb.gpg | sudo apt-key add - 
+
 # Install packages
 RUN apt-get update && \
  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
- DEBIAN_FRONTEND=noninteractive apt-get -y install apt-get install \
+ DEBIAN_FRONTEND=noninteractive apt-get -y install \
  php5-fpm php5-cli php5-curl php5-dev php5-gd php5-imagick php5-imap \
  php5-intl php5-mcrypt php5-memcache php5-mysql php5-sqlite php5-redis \
  bzip2 unzip libxrender1 libfontconfig1 imagemagick \
