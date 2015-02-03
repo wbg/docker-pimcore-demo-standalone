@@ -31,6 +31,9 @@ RUN rm -r /etc/php5/cli/php.ini && ln -s /etc/php5/fpm/php.ini /etc/php5/cli/php
 RUN mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.dist
 ADD www-data.conf /etc/php5/fpm/pool.d/www-data.conf
 
+ADD redis.conf /tmp/redis.conf
+RUN cat /tmp/redis.conf >> /etc/redis/redis.conf
+
 RUN wget "http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-wheezy-amd64.deb?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fwkhtmltopdf%2Ffiles%2F0.12.2.1%2Fwkhtmltox-0.12.2.1_linux-wheezy-amd64.deb%2Fdownload%3Fuse_mirror%3Doptimate&ts=1422911314&use_mirror=heanet" -O wkhtmltopdf-0.12.deb && dpkg -i wkhtmltopdf-0.12.deb
 
 ADD install-ghostscript.sh /tmp/install-ghostscript.sh
