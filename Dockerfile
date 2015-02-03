@@ -35,9 +35,11 @@ RUN wget "http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmlto
 
 ADD install-ghostscript.sh /tmp/install-ghostscript.sh
 ADD install-ffmpeg.sh /tmp/install-ffmpeg.sh
+ADD install-optimizers.sh /tmp/install-optimizers.sh
 RUN chmod 755 /tmp/*.sh
 RUN /tmp/install-ghostscript.sh
 RUN /tmp/install-ffmpeg.sh 
+RUN /tmp/install-optimizers.sh 
 
 RUN wget https://www.pimcore.org/download/pimcore-latest.zip -O /var/www/pimcore.zip 
 RUN cd /var/www && unzip pimcore.zip && rm pimcore.zip 
