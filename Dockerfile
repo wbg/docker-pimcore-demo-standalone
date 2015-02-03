@@ -3,7 +3,7 @@ MAINTAINER pimcore GmbH <info@pimcore.com>
 
 RUN apt-get update && \
  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
- DEBIAN_FRONTEND=noninteractive apt-get -y install wget sudo supervisor pwgen
+ DEBIAN_FRONTEND=noninteractive apt-get -y install wget sudo supervisor pwgen apt-utils
 
 ADD sources.list /tmp/sources.list
 RUN cat /tmp/sources.list >> /etc/apt/sources.list 
@@ -21,21 +21,23 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
 
 RUN apt-get -y -t wheezy-backports install libreoffice python-uno libreoffice-math
 
+# configure apache
 RUN apt-get -y install apache2-mpm-worker libapache2-mod-fastcgi
- 
 RUN a2enmod rewrite actions fastcgi alias
 RUN a2dismod cgi autoindex
 ADD vhost.conf /etc/apache2/sites-enabled/000-default
 
+# configure php-fpm
 RUN rm -r /etc/php5/cli/php.ini && ln -s /etc/php5/fpm/php.ini /etc/php5/cli/php.ini
 RUN mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.dist
 ADD www-data.conf /etc/php5/fpm/pool.d/www-data.conf
 
+# configure redis
 ADD redis.conf /tmp/redis.conf
 RUN cat /tmp/redis.conf >> /etc/redis/redis.conf
 
+# install tools
 RUN wget "http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-wheezy-amd64.deb?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fwkhtmltopdf%2Ffiles%2F0.12.2.1%2Fwkhtmltox-0.12.2.1_linux-wheezy-amd64.deb%2Fdownload%3Fuse_mirror%3Doptimate&ts=1422911314&use_mirror=heanet" -O wkhtmltopdf-0.12.deb && dpkg -i wkhtmltopdf-0.12.deb
-
 ADD install-ghostscript.sh /tmp/install-ghostscript.sh
 ADD install-ffmpeg.sh /tmp/install-ffmpeg.sh
 ADD install-optimizers.sh /tmp/install-optimizers.sh
@@ -44,14 +46,17 @@ RUN /tmp/install-ghostscript.sh
 RUN /tmp/install-ffmpeg.sh 
 RUN /tmp/install-optimizers.sh 
 
-RUN wget https://www.pimcore.org/download/pimcore-latest.zip -O /var/www/pimcore.zip 
-RUN cd /var/www && unzip pimcore.zip && rm pimcore.zip 
-
+# setup startup scripts
 ADD start-apache.sh /start-apache.sh
 ADD start-php-fpm.sh /start-php-fpm.sh
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
-ADD supervisord-apache-fpm.conf /etc/supervisor/conf.d/supervisord-apache-fpm.conf
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# ports
 EXPOSE 80
+
+# volumes
+VOLUME ["/var/www", "/var/lib/mysql"]
+
 CMD ["/run.sh"]
