@@ -21,11 +21,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
 
 RUN apt-get -y -t wheezy-backports install libreoffice python-uno libreoffice-math
 
+# set root password
+RUN echo "root:root" | chpasswd
+
 # configure apache
 RUN apt-get -y install apache2-mpm-worker libapache2-mod-fastcgi
 RUN a2enmod rewrite actions fastcgi alias
 RUN a2dismod cgi autoindex
 ADD vhost.conf /etc/apache2/sites-enabled/000-default
+
+# configure mysql
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
 # configure php-fpm
 RUN rm -r /etc/php5/cli/php.ini && ln -s /etc/php5/fpm/php.ini /etc/php5/cli/php.ini
