@@ -11,7 +11,7 @@ if [ ! -d /var/www/pimcore ]; then
   # download & extract
   cd /var/www
   rm -r /var/www/*
-  sudo -u www-data wget https://www.pimcore.org/download/pimcore-latest.zip -O /tmp/pimcore.zip 
+  sudo -u www-data wget https://www.pimcore.org/download/pimcore-data.zip -O /tmp/pimcore.zip 
   sudo -u www-data unzip /tmp/pimcore.zip -d /var/www/
   rm /tmp/pimcore.zip 
   
