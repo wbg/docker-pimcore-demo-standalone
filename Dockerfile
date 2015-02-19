@@ -62,6 +62,9 @@ ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# pimcore config files
+ADD cache.xml /tmp/cache.xml 
+
 # ports
 EXPOSE 80
 
