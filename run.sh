@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # temp. start mysql to do all the install stuff
-/usr/bin/mysqld_safe > /dev/null 2>&1 &
+/usr/bin/mysqld_safe > /tmp/mysql.tmp.log 2>&1 &
+
+sleep 10 
 
 # install pimcore if needed
 if [ ! -d /var/www/pimcore ]; then
@@ -9,7 +11,7 @@ if [ ! -d /var/www/pimcore ]; then
   cd /var/www
   rm -r /var/www/*
   sudo -u www-data wget https://www.pimcore.org/download/pimcore-latest.zip -O /tmp/pimcore.zip 
-  sudo -u www-data unzip pimcore.zip -d /var/www/
+  sudo -u www-data unzip /tmp/pimcore.zip -d /var/www/
   rm /tmp/pimcore.zip 
   
   # create demo mysql user
@@ -27,6 +29,8 @@ if [ ! -d /var/www/pimcore ]; then
   sudo -u www-data mv /var/www/website/var/config/system.xml.template /var/www/website/var/config/system.xml
   sudo -u www-data cp /tmp/cache.xml /var/www/website/var/config/cache.xml
 fi
+
+cat /tmp/mysql.tmp.log 
 
 # stop temp. mysql service
 mysqladmin -uroot shutdown
