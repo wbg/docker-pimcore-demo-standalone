@@ -39,6 +39,8 @@ Username: admin
 Password: demo
 ```
 
+### References
 
-
+* [pimcore Demo Docker Hub Page](https://registry.hub.docker.com/u/pimcore/docker-pimcore-demo-standalone/) 
+* [pimcore Demo Docker GitHub Repository](https://github.com/pimcore/docker-pimcore-demo-standalone/)
 
