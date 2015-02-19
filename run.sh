@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # temp. start mysql to do all the install stuff
-/usr/bin/mysqld_safe > /tmp/mysql.tmp.log 2>&1 &
+/usr/bin/mysqld_safe > /dev/null 2>&1 &
 
-sleep 10 
+# ensure mysql is running properly
+sleep 20 
 
 # install pimcore if needed
 if [ ! -d /var/www/pimcore ]; then
@@ -20,7 +21,7 @@ if [ ! -d /var/www/pimcore ]; then
   
   # setup database 
   mysql -u pimcore_demo -psecretpassword -e "CREATE DATABASE pimcore_demo_pimcore charset=utf8;"; 
-  mysql -u pimcore_demo -psecretpassword pimcore_demo_pimcore < ./website/dump/data.sql
+  mysql -u pimcore_demo -psecretpassword pimcore_demo_pimcore < /var/www/website/dump/data.sql
   
   # 'admin' password is 'demo' 
   mysql -u pimcore_demo -psecretpassword -D pimcore_demo_pimcore -e "UPDATE users SET password = '\$2y\$10\$3dykbihqPig8UseacT1AgucP2IdRPcmA56wVyFVgIw1RSjCOvmfhm' WHERE name = 'admin'"  
@@ -29,8 +30,6 @@ if [ ! -d /var/www/pimcore ]; then
   sudo -u www-data mv /var/www/website/var/config/system.xml.template /var/www/website/var/config/system.xml
   sudo -u www-data cp /tmp/cache.xml /var/www/website/var/config/cache.xml
 fi
-
-cat /tmp/mysql.tmp.log 
 
 # stop temp. mysql service
 mysqladmin -uroot shutdown
