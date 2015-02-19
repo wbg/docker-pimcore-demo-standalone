@@ -1,5 +1,7 @@
 #!/bin/bash
 
+su www-data
+
 # install pimcore if needed
 if [ ! -d /var/www/pimcore ]; then
   # download & extract
@@ -10,5 +12,8 @@ if [ ! -d /var/www/pimcore ]; then
   # setup database 
   # ... 
 fi
+
+# go back to root, to start the daemons
+exit; 
 
 exec supervisord -n
