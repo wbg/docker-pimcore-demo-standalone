@@ -30,6 +30,7 @@ RUN a2enmod rewrite actions fastcgi alias
 RUN a2dismod cgi autoindex
 RUN rm /etc/apache2/sites-enabled/* 
 RUN rm /var/www/* 
+RUN chown -R www-data:www-data /var/www
 ADD vhost.conf /etc/apache2/sites-enabled/000-default
 
 # configure mysql
