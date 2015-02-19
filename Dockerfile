@@ -19,7 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
  pngnq pngcrush xvfb cabextract libfcgi0ldbl poppler-utils xfonts-75dpi \
  mysql-server-5.6 redis-server postfix
 
-##RUN apt-get -y -t wheezy-backports install libreoffice python-uno libreoffice-math
+RUN apt-get -y -t wheezy-backports install libreoffice python-uno libreoffice-math
 
 # set root password
 RUN echo "root:root" | chpasswd
@@ -50,10 +50,10 @@ RUN wget "http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmlto
 ADD install-ghostscript.sh /tmp/install-ghostscript.sh
 ADD install-ffmpeg.sh /tmp/install-ffmpeg.sh
 ADD install-optimizers.sh /tmp/install-optimizers.sh
-##RUN chmod 755 /tmp/*.sh
-##RUN /tmp/install-ghostscript.sh
-##RUN /tmp/install-ffmpeg.sh 
-##RUN /tmp/install-optimizers.sh 
+RUN chmod 755 /tmp/*.sh
+RUN /tmp/install-ghostscript.sh
+RUN /tmp/install-ffmpeg.sh 
+RUN /tmp/install-optimizers.sh 
 
 # setup startup scripts
 ADD start-apache.sh /start-apache.sh
