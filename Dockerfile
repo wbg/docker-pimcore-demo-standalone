@@ -29,6 +29,7 @@ RUN apt-get -y install apache2-mpm-worker libapache2-mod-fastcgi
 RUN a2enmod rewrite actions fastcgi alias
 RUN a2dismod cgi autoindex
 RUN rm /etc/apache2/sites-enabled/* 
+RUN rm /var/www/* 
 ADD vhost.conf /etc/apache2/sites-enabled/000-default
 
 # configure mysql
