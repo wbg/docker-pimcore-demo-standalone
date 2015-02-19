@@ -1,7 +1,5 @@
 #!/bin/bash
 
-exec supervisord -n
-
 # install pimcore if needed
 if [ ! -d /var/www/pimcore ]; then
   # download & extract
@@ -12,3 +10,5 @@ if [ ! -d /var/www/pimcore ]; then
   # setup database 
   # ... 
 fi
+
+exec supervisord -n
