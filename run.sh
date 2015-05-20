@@ -21,6 +21,7 @@ if [ ! -d /var/www/pimcore ]; then
   
   # setup database 
   mysql -u pimcore_demo -psecretpassword -e "CREATE DATABASE pimcore_demo_pimcore charset=utf8;"; 
+  mysql -u pimcore_demo -psecretpassword pimcore_demo_pimcore < /var/www/pimcore/modules/install/mysql/install.sql
   mysql -u pimcore_demo -psecretpassword pimcore_demo_pimcore < /var/www/website/dump/data.sql
   
   # 'admin' password is 'demo' 
