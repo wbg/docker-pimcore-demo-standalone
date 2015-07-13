@@ -46,7 +46,7 @@ ADD redis.conf /tmp/redis.conf
 RUN cat /tmp/redis.conf >> /etc/redis/redis.conf
 
 # install tools
-RUN wget "http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-wheezy-amd64.deb?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fwkhtmltopdf%2Ffiles%2F0.12.2.1%2Fwkhtmltox-0.12.2.1_linux-wheezy-amd64.deb%2Fdownload%3Fuse_mirror%3Doptimate&ts=1422911314&use_mirror=heanet" -O wkhtmltopdf-0.12.deb && dpkg -i wkhtmltopdf-0.12.deb
+RUN wget "http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-wheezy-amd64.deb" -O wkhtmltopdf-0.12.deb && dpkg -i wkhtmltopdf-0.12.deb
 ADD install-ghostscript.sh /tmp/install-ghostscript.sh
 ADD install-ffmpeg.sh /tmp/install-ffmpeg.sh
 ADD install-optimizers.sh /tmp/install-optimizers.sh
