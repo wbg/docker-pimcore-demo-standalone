@@ -28,8 +28,8 @@ if [ ! -d /var/www/pimcore ]; then
   mysql -u pimcore_demo -psecretpassword -D pimcore_demo_pimcore -e "UPDATE users SET password = '\$2y\$10\$3dykbihqPig8UseacT1AgucP2IdRPcmA56wVyFVgIw1RSjCOvmfhm' WHERE name = 'admin'"  
   mysql -u pimcore_demo -psecretpassword -D pimcore_demo_pimcore -e "UPDATE users SET id = '0' WHERE name = 'system'"
   
-  sudo -u www-data mv /var/www/website/var/config/system.xml.template /var/www/website/var/config/system.xml
-  sudo -u www-data cp /tmp/cache.xml /var/www/website/var/config/cache.xml
+  sudo -u www-data mv /var/www/website/var/config/system.template.php /var/www/website/var/config/system.php
+  sudo -u www-data cp /tmp/cache.php /var/www/website/var/config/cache.php
 fi
 
 # stop temp. mysql service
