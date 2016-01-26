@@ -25,8 +25,8 @@ if [ ! -d /var/www/pimcore ]; then
   mysql -u pimcore_demo -psecretpassword pimcore_demo_pimcore < /var/www/website/dump/data.sql
   
   # 'admin' password is 'demo' 
-  mysql -u pimcore_demo -psecretpassword -D pimcore_demo_pimcore -e "UPDATE users SET password = '\$2y\$10\$3dykbihqPig8UseacT1AgucP2IdRPcmA56wVyFVgIw1RSjCOvmfhm' WHERE name = 'admin'"  
   mysql -u pimcore_demo -psecretpassword -D pimcore_demo_pimcore -e "UPDATE users SET id = '0' WHERE name = 'system'"
+  sudo -u www-data php /var/www/pimcore/cli/console.php reset-password -u admin -p demo
   
   sudo -u www-data mv /var/www/website/var/config/system.template.php /var/www/website/var/config/system.php
   sudo -u www-data cp /tmp/cache.php /var/www/website/var/config/cache.php
