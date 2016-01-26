@@ -35,6 +35,7 @@ http://IP-OR-HOSTNAME-OF-DOCKER-HOST/admin/
 
 ### Admin user / password
 ```
+http://IP-OR-HOSTNAME-OF-DOCKER-HOST/admin/
 Username: admin
 Password: demo
 ```
