@@ -1,3 +1,5 @@
 #!/bin/bash
 
-exec php5-fpm -F
+mkdir -p /run/php/
+
+exec php-fpm7.0 -F

@@ -1,11 +1,9 @@
 #!/bin/bash
 
-apt-get -y build-dep ghostscript
+apt-get build-dep ghostscript -y
 
-wget http://downloads.ghostscript.com/public/ghostscript-9.10.tar.gz -O ghostscript.tgz
+wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs919/ghostscript-9.19-linux-x86_64.tgz -O ghostscript.tgz
 tar xfvz ghostscript.tgz
-cd ghostscript-*/
-./configure
-make -j4
-make install
-cd ..
+cd ghostscript-9.19-linux-x86_64/
+mv gs-919-linux_x86_64 /usr/local/bin/gs
+
