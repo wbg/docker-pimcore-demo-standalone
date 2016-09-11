@@ -14,7 +14,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
  php7.0-fpm php7.0-cli php7.0-curl php7.0-dev php7.0-gd php7.0-imagick php7.0-imap \
  php7.0-intl php7.0-mcrypt php7.0-memcache php7.0-mysql php7.0-sqlite php7.0-redis \
- php7.0-bz2 php7.0-ldap bzip2 unzip memcached ntpdate libxrender1 libfontconfig1 \
+ php7.0-bz2 php7.0-ldap php7.0-xml bzip2 unzip memcached ntpdate libxrender1 libfontconfig1 \
  imagemagick inkscape build-essential libssl-dev rcconf sudo lynx autoconf \
  libmagickwand-dev pngnq pngcrush xvfb cabextract libfcgi0ldbl poppler-utils rsync \
  xz-utils libreoffice python-uno libreoffice-math xfonts-75dpi jpegoptim monit \
