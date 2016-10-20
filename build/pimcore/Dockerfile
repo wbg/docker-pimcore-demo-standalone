@@ -1,4 +1,4 @@
-FROM google/debian:jessie
+FROM debian:jessie
 MAINTAINER pimcore GmbH <info@pimcore.com>
 
 RUN apt-get update && \
@@ -18,11 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
  imagemagick inkscape build-essential libssl-dev rcconf sudo lynx autoconf \
  libmagickwand-dev pngnq pngcrush xvfb cabextract libfcgi0ldbl poppler-utils rsync \
  xz-utils libreoffice python-uno libreoffice-math xfonts-75dpi jpegoptim monit \
- aptitude pigz libtext-template-perl mailutils redis-server git-core curl \
- mariadb-server-10.0
-
-# set root password
-RUN echo "root:root" | chpasswd
+ aptitude pigz libtext-template-perl mailutils git-core curl mariadb-client
 
 # configure apache
 RUN apt-get -y install apache2 libapache2-mod-fastcgi
@@ -33,9 +29,6 @@ RUN rm -r /var/www/*
 RUN chown -R www-data:www-data /var/www
 ADD vhost.conf /etc/apache2/sites-enabled/000-default.conf
 
-# configure mysql
-RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
-
 # configure php-fpm
 RUN rm -r /etc/php/7.0/cli/php.ini
 RUN rm -r /etc/php/7.0/fpm/php.ini
@@ -43,10 +36,6 @@ ADD php.ini /etc/php/7.0/fpm/php.ini
 RUN ln -s /etc/php/7.0/fpm/php.ini /etc/php/7.0/cli/php.ini
 RUN mv /etc/php/7.0/fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf.dist 
 ADD www-data.conf /etc/php/7.0/fpm/pool.d/www-data.conf
-
-# configure redis
-ADD redis.conf /tmp/redis.conf
-RUN cat /tmp/redis.conf >> /etc/redis/redis.conf
 
 # install tools
 RUN wget "http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-jessie-amd64.deb" -O wkhtmltopdf-0.12.deb && dpkg -i wkhtmltopdf-0.12.deb
@@ -63,9 +52,16 @@ ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+ENV REDIS_HOST=redis
+ENV MYSQL_DATABASE=pimcore_demo_pimcore
+ENV MYSQL_USER=pimcore_demo
+ENV MYSQL_PASSWORD=secretpasswordh
+ENV MYSQL_RANDOM_ROOT_PASSWORD=yes
+
 # pimcore config files
 ADD cache.php /tmp/cache.php
 
+ADD system.php /tmp/system.php
 # ports
 EXPOSE 80
 
@@ -73,3 +69,4 @@ EXPOSE 80
 VOLUME ["/var/www", "/var/lib/mysql"]
 
 CMD ["/run.sh"]
+	

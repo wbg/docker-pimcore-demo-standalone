@@ -1,0 +1,31 @@
+version: '2'
+services:
+  pimcore:
+    build: ./build/pimcore
+    ports:
+     - "8020:80"
+    links:
+     - db
+     - redis
+    volumes:
+     - ./data/www:/var/www
+    environment:
+     - MYSQL_HOST
+     - MYSQL_DATABASE
+     - MYSQL_USER
+     - MYSQL_PASSWORD
+     - REDIS_HOST
+     - PIMCORE_ADMIN
+     - PIMCORE_ADMIN_PASSWORD 
+  db:
+    image: mariadb
+    volumes:
+     - ./data/db:/var/lib/mysql
+    environment:
+     - MYSQL_DATABASE
+     - MYSQL_USER
+     - MYSQL_PASSWORD
+     - MYSQL_RANDOM_ROOT_PASSWORD
+  redis:
+   build: ./build/redis
+
