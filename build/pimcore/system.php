@@ -5,7 +5,7 @@ return [
         "timezone" => "Europe/Berlin",
         "php_cli" => "",
         "domain" => "",
-        "redirect_to_maindomain" => FALSE,
+        "redirect_to_maindomain" => false,
         "language" => "en",
         "validLanguages" => "en,de",
         "fallbackLanguages" => [
@@ -16,22 +16,22 @@ return [
         "theme" => "",
         "contactemail" => "",
         "loginscreencustomimage" => "",
-        "disableusagestatistics" => FALSE,
-        "debug" => FALSE,
+        "disableusagestatistics" => false,
+        "debug" => false,
         "debug_ip" => "",
         "http_auth" => [
             "username" => "",
             "password" => ""
         ],
-        "custom_php_logfile" => TRUE,
+        "custom_php_logfile" => true,
         "debugloglevel" => "error",
-        "disable_whoops" => FALSE,
-        "debug_admin_translations" => FALSE,
-        "devmode" => FALSE,
-        "logrecipient" => NULL,
+        "disable_whoops" => false,
+        "debug_admin_translations" => false,
+        "devmode" => false,
+        "logrecipient" => null,
         "viewSuffix" => "",
         "instanceIdentifier" => "",
-        "show_cookie_notice" => FALSE
+        "show_cookie_notice" => false
     ],
     "database" => [
         "adapter" => "Mysqli",
@@ -45,7 +45,7 @@ return [
     ],
     "documents" => [
         "versions" => [
-            "days" => NULL,
+            "days" => null,
             "steps" => 10
         ],
         "default_controller" => "default",
@@ -53,27 +53,27 @@ return [
         "error_pages" => [
             "default" => "/error"
         ],
-        "createredirectwhenmoved" => FALSE,
+        "createredirectwhenmoved" => false,
         "allowtrailingslash" => "no",
         "allowcapitals" => "no",
-        "generatepreview" => TRUE,
+        "generatepreview" => true,
         "wkhtmltoimage" => "",
         "wkhtmltopdf" => ""
     ],
     "objects" => [
         "versions" => [
-            "days" => NULL,
+            "days" => null,
             "steps" => 10
         ]
     ],
     "assets" => [
         "versions" => [
-            "days" => NULL,
+            "days" => null,
             "steps" => 10
         ],
         "icc_rgb_profile" => "",
         "icc_cmyk_profile" => "",
-        "hide_edit_image" => FALSE
+        "hide_edit_image" => false
     ],
     "services" => [
         "google" => [
@@ -84,17 +84,17 @@ return [
         ]
     ],
     "cache" => [
-        "enabled" => FALSE,
-        "lifetime" => NULL,
+        "enabled" => false,
+        "lifetime" => null,
         "excludePatterns" => "",
         "excludeCookie" => ""
     ],
     "outputfilters" => [
-        "less" => FALSE,
+        "less" => false,
         "lesscpath" => ""
     ],
     "webservice" => [
-        "enabled" => TRUE
+        "enabled" => true
     ],
     "httpclient" => [
         "adapter" => "Zend_Http_Client_Adapter_Socket",

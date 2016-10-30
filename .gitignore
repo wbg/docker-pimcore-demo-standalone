@@ -2,4 +2,6 @@ data/www/*
 !data/www/.gitkeep
 data/db/*
 !data/db/.gitkeep
+*.swp
+*~
 

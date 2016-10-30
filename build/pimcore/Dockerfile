@@ -1,27 +1,25 @@
 FROM debian:jessie
 MAINTAINER pimcore GmbH <info@pimcore.com>
 
+ADD sources.list /tmp/sources.list
+
 RUN apt-get update && \
  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
- DEBIAN_FRONTEND=noninteractive apt-get -y install wget sudo supervisor pwgen apt-utils
-
-ADD sources.list /tmp/sources.list
-RUN cat /tmp/sources.list > /etc/apt/sources.list 
-
-RUN wget -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add - 
-
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
+ DEBIAN_FRONTEND=noninteractive apt-get -y install wget sudo supervisor pwgen apt-utils && \
+ cat /tmp/sources.list > /etc/apt/sources.list && \
+ wget -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add - && \
+ apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
  php7.0-fpm php7.0-cli php7.0-curl php7.0-dev php7.0-gd php7.0-imagick php7.0-imap \
  php7.0-intl php7.0-mcrypt php7.0-memcache php7.0-mysql php7.0-sqlite php7.0-redis \
  php7.0-bz2 php7.0-ldap php7.0-xml bzip2 unzip memcached ntpdate libxrender1 libfontconfig1 \
  imagemagick inkscape build-essential libssl-dev rcconf sudo lynx autoconf \
  libmagickwand-dev pngnq pngcrush xvfb cabextract libfcgi0ldbl poppler-utils rsync \
  xz-utils libreoffice python-uno libreoffice-math xfonts-75dpi jpegoptim monit \
- aptitude pigz libtext-template-perl mailutils git-core curl mariadb-client
+ aptitude pigz libtext-template-perl mailutils git-core curl mariadb-client \
+ apache2 libapache2-mod-fastcgi && apt-get build-dep ghostscript -y && \
+ apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # configure apache
-RUN apt-get -y install apache2 libapache2-mod-fastcgi
 RUN a2dismod -f cgi autoindex mpm_worker mpm_prefork
 RUN a2enmod rewrite actions fastcgi alias status filter expires headers setenvif proxy proxy_fcgi socache_shmcb mpm_event ssl
 RUN rm /etc/apache2/sites-enabled/* 
@@ -66,7 +64,7 @@ ADD system.php /tmp/system.php
 EXPOSE 80
 
 # volumes
-VOLUME ["/var/www", "/var/lib/mysql"]
+VOLUME ["/var/www"]
 
 CMD ["/run.sh"]
 	
